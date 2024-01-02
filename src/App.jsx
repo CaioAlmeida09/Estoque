@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Search } from "./Pages/search";
 import { View } from "./Pages/view";
 import { Estoque } from "./Pages/estoque";
-import Home from "./Pages/home";
+import { Home } from "./Pages/home";
 function App() {
   return (
     <BrowserRouter>
