@@ -28,6 +28,13 @@ export function Header() {
             {" "}
             ID
           </Link>
+          <Link
+            to="/Estoque"
+            className=" hover:border-b-2 hover:border-cyan-950"
+          >
+            {" "}
+            Estoque
+          </Link>
         </section>
         <img src={Logo} className="md:w-22 md:h-12 w-15 h-8 " />
       </header>

@@ -4,9 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebaseconection";
 
 interface SolicitationProps {
-  corCamisa: string;
-  tamanhoCamisa: string;
-  sexo: string;
+  tamanhos: string;
   quantidade: number;
   id: string;
 }
@@ -42,23 +40,31 @@ export function View() {
           solicitacoes.map((item, index) => (
             <section
               key={index}
-              className={`max-w-sm rounded-lg flex flex-col justify-center items-center p-3 gap-3 text-lg font-medium ${
-                item.corCamisa === "cinzaChumbo"
-                  ? "bg-gray-600"
-                  : item.corCamisa === "azulRoyal"
+              className={` w-80 rounded-lg flex flex-col  p-3 gap-3 text-lg font-medium ${
+                item.tamanhos === "P-Azul-Fem" ||
+                item.tamanhos === "P-Azul-Masc" ||
+                item.tamanhos === "M-Azul-Masc" ||
+                item.tamanhos === "M-Azul-Fem" ||
+                item.tamanhos === "G-Azul-Fem" ||
+                item.tamanhos === "G-Azul-Masc" ||
+                item.tamanhos === "GG-Azul-Masc" ||
+                item.tamanhos === "GG-Azul-Fem" ||
+                item.tamanhos === "XGG-Azul-Masc"
                   ? "bg-blue-600"
-                  : ""
+                  : "bg-gray-600"
               }`}
             >
-              <h3> {item.id} </h3>
-              <p
-                className={` px-5 py-2  
-                 
-                `}
-              >
-                {item.tamanhoCamisa} - {item.sexo} - {item.quantidade} -
-                {item.corCamisa}
-              </p>
+              <h3 className="text-center"> {item.id} </h3>
+              <div className="flex justify-between items-center text-base">
+                <section className="flex flex-col justify-center items-center">
+                  <p> Modelo </p>
+                  <p> {item.tamanhos} </p>
+                </section>
+                <section className="flex flex-col justify-center items-center">
+                  <p> Quantidade </p>
+                  <p> {item.quantidade}</p>
+                </section>
+              </div>
             </section>
           ))}
       </div>

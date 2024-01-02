@@ -5,6 +5,7 @@ import {
   getDocs,
   doc,
   updateDoc,
+  increment,
 } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/header";
@@ -31,9 +32,7 @@ interface TamanhoProps {
 }
 
 function Home() {
-  const [corCamisa, setCorCamisa] = useState({
-    corCamisa: "bg-black",
-  });
+  const [corCamisa, setCorCamisa] = useState({});
   const [Tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
 
   useEffect(() => {
@@ -67,22 +66,6 @@ function Home() {
       id: Number(idDigitado.value),
     };
 
-    if (
-      camisaData.tamanhos === "P-Azul-Fem" ||
-      camisaData.tamanhos === "P-Azul-Masc" ||
-      camisaData.tamanhos === "M-Azul-Masc" ||
-      camisaData.tamanhos === "M-Azul-Fem" ||
-      camisaData.tamanhos === "G-Azul-Fem" ||
-      camisaData.tamanhos === "G-Azul-Masc" ||
-      camisaData.tamanhos === "GG-Azul-Masc" ||
-      camisaData.tamanhos === "GG-Azul-Fem" ||
-      camisaData.tamanhos === "XGG-Azul-Masc"
-    ) {
-      console.log("Tamanho selecionado:", tamanhoSelecionado.value);
-      console.log("Cor da camisa após setCorCamisa:", corCamisa);
-    }
-    console.log("Dados a serem enviados:", camisaData);
-
     try {
       const docRef = await addDoc(collection(db, "camisas"), camisaData);
       console.log("Dados enviados com sucesso!");
@@ -94,7 +77,7 @@ function Home() {
     const documentId = "PZiKQTer4Eib9atJKvFv";
     const documentoRef = doc(db, "tamanhos", documentId);
     updateDoc(documentoRef, {
-      "G-Azul-Fem": 1,
+      [camisaData.tamanhos]: increment(camisaData.quantidade),
     })
       .then(() => {
         console.log("Documento atualizado com sucesso!");
@@ -104,27 +87,49 @@ function Home() {
       });
   };
 
-  const handleCorCamisaChange = (event) => {
-    setCorCamisa({ corCamisa: event.target.value });
+  const handleTamanhoChange = (event) => {
+    const tamanhoSelecionado = event.target.value;
+
+    if (
+      tamanhoSelecionado === "P-Azul-Fem" ||
+      tamanhoSelecionado === "P-Azul-Masc" ||
+      tamanhoSelecionado === "M-Azul-Masc" ||
+      tamanhoSelecionado === "M-Azul-Fem" ||
+      tamanhoSelecionado === "G-Azul-Fem" ||
+      tamanhoSelecionado === "G-Azul-Masc" ||
+      tamanhoSelecionado === "GG-Azul-Masc" ||
+      tamanhoSelecionado === "GG-Azul-Fem" ||
+      tamanhoSelecionado === "XGG-Azul-Masc"
+    ) {
+      setCorCamisa("Azul");
+      console.log("Cor da camisa após setCorCamisa:", corCamisa);
+    } else {
+      setCorCamisa("Cinza");
+    }
   };
 
   return (
     <>
       <Header />
-      <div className="h-screen w-full flex flex-col justify-start items-center">
+
+      <div className="h-screen w-full flex flex-col justify-start items-center p-5">
+        <h1 className=" text-lg md:text-3xl text-center mt-5 mb-2 font-medium">
+          {" "}
+          Controle do Estoque de Camisas - Filial Recife{" "}
+        </h1>
         <form
           id="meuFormulario"
-          className={`flex flex-col gap-8 max-w-sm bg-blue-400 p-8 mt-8 text-lg font-medium ${
-            corCamisa.corCamisa === "azulRoyal"
-              ? "bg-blue-600"
-              : corCamisa.corCamisa === "cinzaChumbo"
-              ? "bg-gray-600"
+          className={`flex flex-col gap-8 max-w-sm bg-blue-400 p-8 mt-8 text-lg font-medium rounded-lg ${
+            corCamisa === "Azul"
+              ? "bg-blue-800"
+              : corCamisa === "Cinza"
+              ? "bg-gray-700"
               : ""
           }`}
         >
           <section className="flex flex-col gap-5">
             <label> Selecione o Tamanho e Cor da Camisa</label>
-            <select id="tamanhos">
+            <select id="tamanhos" onChange={handleTamanhoChange}>
               <option value="P-Cinza-Masc">P - Cinza - Masculina</option>
               <option value="P-Cinza-Fem">P - Cinza - Feminina</option>
               <option value="P-Azul-Masc">P - Azul - Masculina</option>
