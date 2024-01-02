@@ -31,7 +31,7 @@ interface TamanhoProps {
   "XGG-Cinza-Masc": number;
 }
 
-function Home() {
+export function Home() {
   const [corCamisa, setCorCamisa] = useState({});
   const [Tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
 
@@ -175,4 +175,3 @@ function Home() {
     </>
   );
 }
-export default Home;
