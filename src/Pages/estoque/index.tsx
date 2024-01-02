@@ -41,152 +41,161 @@ export function Estoque() {
     getPedidos();
   }, []);
   return (
-    <div>
-      <Header /> <h1> Teste Estoque</h1>
+    <>
+      <Header />{" "}
+      <h1 className="text-lg font-medium text-center mt-3 md:text-2xl">
+        {" "}
+        Visualizando o Estoque
+      </h1>
       {Tamanhos.map((item, index) => (
         <div
-          className="h-screen w-full grid md:grid-cols-2 flex-col "
+          className="h-screen w-full flex flex-col p-5 gap-5 items-center mt-4 "
           key={index}
         >
-          <section className=" bg-blue-900 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-            <h1 className="text-lg font-medium mb-2"> Azul Masculina</h1>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> P - Azul - Masculina:</p>
-                <p> {item["P-Azul-Masc"]}</p>
+          <section className="flex flex-col md:flex-row gap-8">
+            {" "}
+            <section className=" bg-blue-900 w-80 flex flex-col justify-center items-center p-3 h-56 ">
+              <h1 className="text-lg font-medium mb-2"> Azul Masculina</h1>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> P - Azul - Masculina:</p>
+                  <p> {item["P-Azul-Masc"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> M - Azul - Masculina:</p>
-                <p> {item["M-Azul-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> M - Azul - Masculina:</p>
+                  <p> {item["M-Azul-Masc"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> G - Azul - Masculina:</p>
-                <p> {item["G-Azul-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> G - Azul - Masculina:</p>
+                  <p> {item["G-Azul-Masc"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> GG - Azul - Masculina:</p>
-                <p> {item["GG-Azul-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> GG - Azul - Masculina:</p>
+                  <p> {item["GG-Azul-Masc"]}</p>
+                </div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> XGG - Azul - Masculina:</p>
+                  <p> {item["XGG-Azul-Masc"]}</p>
+                </div>
               </div>
-              <div className="flex gap-2">
-                {" "}
-                <p> XGG - Azul - Masculina:</p>
-                <p> {item["XGG-Azul-Masc"]}</p>
+              {/* Sessão Cinza Masculina  */}
+            </section>
+            <section className=" bg-gray-700 w-80 flex flex-col justify-center items-center p-3 h-56 ">
+              <h1 className="text-lg font-medium mb-2"> Cinza Maculina</h1>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> P - Cinza - Masculina:</p>
+                  <p> {item["P-Cinza-Masc"]}</p>
+                </div>
               </div>
-            </div>
-            {/* Sessão Cinza Masculina  */}
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> M - Cinza - Masculina:</p>
+                  <p> {item["M-Cinza-Masc"]}</p>
+                </div>
+              </div>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> G - Cinza - Masculina:</p>
+                  <p> {item["G-Cinza-Masc"]}</p>
+                </div>
+              </div>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> GG - Cinza - Masculina:</p>
+                  <p> {item["GG-Cinza-Masc"]}</p>
+                </div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> XGG - Azul - Masculina:</p>
+                  <p> {item["XGG-Cinza-Masc"]}</p>
+                </div>
+              </div>
+            </section>{" "}
           </section>
-          <section className=" bg-gray-700 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-            <h1 className="text-lg font-medium mb-2"> Cinza Maculina</h1>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> P - Cinza - Masculina:</p>
-                <p> {item["P-Cinza-Masc"]}</p>
+          <section className="flex flex-col md:flex-row gap-8">
+            {/* Sessão Azul Feminina */}
+            <section className=" bg-blue-400 w-80 flex flex-col justify-center items-center p-3 h-56">
+              <h1 className="text-lg font-medium mb-2"> Azul Feminina</h1>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> P - Azul - Felimina:</p>
+                  <p> {item["P-Azul-Fem"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> M - Cinza - Masculina:</p>
-                <p> {item["M-Cinza-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> M - Azul - Feminina:</p>
+                  <p> {item["M-Azul-Fem"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> G - Cinza - Masculina:</p>
-                <p> {item["G-Cinza-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> G - Azul - Feminina:</p>
+                  <p> {item["G-Azul-Fem"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> GG - Cinza - Masculina:</p>
-                <p> {item["GG-Cinza-Masc"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> GG - Azul - Feminina:</p>
+                  <p> {item["GG-Azul-Masc"]}</p>
+                </div>
               </div>
-              <div className="flex gap-2">
-                {" "}
-                <p> XGG - Azul - Masculina:</p>
-                <p> {item["XGG-Cinza-Masc"]}</p>
+            </section>
+            {/* sessão cinza feminina */}
+            <section className=" bg-gray-400 w-80 flex flex-col justify-center items-center p-3 h-56 ">
+              <h1 className="text-lg font-medium mb-2"> Cinza Feminina</h1>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> P - Cinza - Felimina:</p>
+                  <p> {item["P-Cinza-Fem"]}</p>
+                </div>
               </div>
-            </div>
-          </section>
-          {/* Sessão Azul Feminina */}
-          <section className=" bg-blue-400 w-80 flex flex-col justify-center items-center p-3 h-56">
-            <h1 className="text-lg font-medium mb-2"> Azul Feminina</h1>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> P - Azul - Felimina:</p>
-                <p> {item["P-Azul-Fem"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> M - Cinza- Feminina:</p>
+                  <p> {item["M-Cinza-Fem"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> M - Azul - Feminina:</p>
-                <p> {item["M-Azul-Fem"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> G - Cinza - Feminina:</p>
+                  <p> {item["G-Cinza-Fem"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> G - Azul - Feminina:</p>
-                <p> {item["G-Azul-Fem"]}</p>
+              <div>
+                <div className="flex gap-2">
+                  {" "}
+                  <p> GG - Cinza - Feminina:</p>
+                  <p> {item["GG-Cinza-Masc"]}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> GG - Azul - Feminina:</p>
-                <p> {item["GG-Azul-Masc"]}</p>
-              </div>
-            </div>
-          </section>
-          {/* sessão cinza feminina */}
-          <section className=" bg-gray-400 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-            <h1 className="text-lg font-medium mb-2"> Cinza Feminina</h1>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> P - Cinza - Felimina:</p>
-                <p> {item["P-Cinza-Fem"]}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> M - Cinza- Feminina:</p>
-                <p> {item["M-Cinza-Fem"]}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> G - Cinza - Feminina:</p>
-                <p> {item["G-Cinza-Fem"]}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                {" "}
-                <p> GG - Cinza - Feminina:</p>
-                <p> {item["GG-Cinza-Masc"]}</p>
-              </div>
-            </div>
+            </section>
           </section>
         </div>
       ))}
-    </div>
+    </>
   );
 }
