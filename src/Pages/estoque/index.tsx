@@ -49,13 +49,13 @@ export function Estoque() {
       </h1>
       {Tamanhos.map((item, index) => (
         <div
-          className="h-screen w-full flex flex-col p-5 gap-5 items-center mt-4 "
+          className="h-screen w-full flex flex-col p-5 gap-5 items-center mt-4 text-lg"
           key={index}
         >
           <section className="flex flex-col md:flex-row gap-8">
             {" "}
             <section className=" bg-blue-900 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-              <h1 className="text-lg font-medium mb-2"> Azul Masculina</h1>
+              <h1 className=" text-2xl font-medium mb-2"> Azul Masculina</h1>
               <div>
                 <div className="flex gap-2">
                   {" "}
@@ -92,7 +92,7 @@ export function Estoque() {
               {/* Sessão Cinza Masculina  */}
             </section>
             <section className=" bg-gray-700 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-              <h1 className="text-lg font-medium mb-2"> Cinza Maculina</h1>
+              <h1 className="text-2xl font-medium mb-2"> Cinza Maculina</h1>
               <div>
                 <div className="flex gap-2">
                   {" "}
@@ -131,7 +131,7 @@ export function Estoque() {
           <section className="flex flex-col md:flex-row gap-8">
             {/* Sessão Azul Feminina */}
             <section className=" bg-blue-400 w-80 flex flex-col justify-center items-center p-3 h-56">
-              <h1 className="text-lg font-medium mb-2"> Azul Feminina</h1>
+              <h1 className="text-2xl font-medium mb-2"> Azul Feminina</h1>
               <div>
                 <div className="flex gap-2">
                   {" "}
@@ -163,7 +163,7 @@ export function Estoque() {
             </section>
             {/* sessão cinza feminina */}
             <section className=" bg-gray-400 w-80 flex flex-col justify-center items-center p-3 h-56 ">
-              <h1 className="text-lg font-medium mb-2"> Cinza Feminina</h1>
+              <h1 className="text-2xl font-medium mb-2"> Cinza Feminina</h1>
               <div>
                 <div className="flex gap-2">
                   {" "}
