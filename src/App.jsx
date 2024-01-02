@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./Pages/home/index.tsx";
 import { Search } from "./Pages/search";
 import { View } from "./Pages/view";
 import { Estoque } from "./Pages/estoque";
-import { Home } from "./Pages/home";
+
 function App() {
   return (
     <BrowserRouter>
