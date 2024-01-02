@@ -152,7 +152,7 @@ function Home() {
           </section>
 
           <section className="flex gap-5">
-            <label htmlFor="quantidade">Quantidade:</label>
+            <label htmlFor="quantidade">Quantidade :</label>
             <select id="quantidade" name="quantidade" className="h-8">
               <option value="1">1</option>
               <option value="2">2</option>
