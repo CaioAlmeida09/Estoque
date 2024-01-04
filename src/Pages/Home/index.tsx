@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+import Swal from "sweetalert2";
 import { db } from "../../services/firebaseconection";
 import {
   collection,
@@ -59,11 +61,14 @@ export function Home() {
       "quantidade"
     ) as HTMLSelectElement;
     const idDigitado = document.getElementById("id") as HTMLInputElement;
+    const dataAtual = new Date();
+    const dataSolicitacao = format(dataAtual, "dd/MM/yyyy");
 
     const camisaData = {
       tamanhos: tamanhoSelecionado.value,
       quantidade: Number(quantidadeSelecionada.value),
-      id: Number(idDigitado.value),
+      idUser: Number(idDigitado.value),
+      createdAt: dataSolicitacao,
     };
 
     try {
@@ -85,6 +90,11 @@ export function Home() {
       .catch((error) => {
         console.error("Erro ao atualizar documento: ", error);
       });
+    Swal.fire({
+      title: "Dado enviado com sucesso!",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
   };
 
   const handleTamanhoChange = (event) => {
