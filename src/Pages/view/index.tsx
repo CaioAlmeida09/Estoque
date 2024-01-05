@@ -18,9 +18,30 @@ interface SolicitationProps {
   userId: string;
   id: string;
 }
+interface TamanhoProps {
+  "P-Cinza-Masc": number;
+  "P-Cinza-Fem": number;
+  "P-Azul-Masc": number;
+  "P-Azul-Fem": number;
+  "M-Cinza-Masc": number;
+  "M-Cinza-Fem": number;
+  "M-Azul-Masc": number;
+  "M-Azul-Fem": number;
+  "GG-Cinza-Masc": number;
+  "GG-Cinza-Fem": number;
+  "GG-Azul-Masc": number;
+  "GG-Azul-Fem": number;
+  "G-Cinza-Masc": number;
+  "G-Cinza-Fem": number;
+  "G-Azul-Masc": number;
+  "G-Azul-Fem": number;
+  "XGG-Azul-Masc": number;
+  "XGG-Cinza-Masc": number;
+}
 
 export function View() {
   const [solicitacoes, setSolicitacoes] = useState<SolicitationProps[]>([]);
+  const [tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
 
   useEffect(() => {
     async function getPedidos() {
@@ -33,10 +54,23 @@ export function View() {
       })) as SolicitationProps[];
 
       setSolicitacoes(pedidoRef);
-      console.log(pedidoRef);
     }
 
     getPedidos();
+  }, []);
+  useEffect(() => {
+    async function getTamanhos() {
+      const tamanhosRef = collection(db, "tamanhos");
+      const dataTamanho = await getDocs(tamanhosRef);
+      const tamanhoRef = dataTamanho.docs.map((doc) => ({
+        ...doc.data(),
+      })) as TamanhoProps[];
+
+      setTamanhos(tamanhoRef);
+      console.log(tamanhoRef);
+    }
+
+    getTamanhos();
   }, []);
 
   async function HandleDelete(item: SolicitationProps) {
@@ -54,21 +88,35 @@ export function View() {
     const newList = solicitacoes.filter((obj) => obj.id !== item.id);
     setSolicitacoes(newList);
 
-    const docID = item.id;
+    const docID = "PZiKQTer4Eib9atJKvFv";
+
+    const newSize = item.quantidade;
+    const tamanhoModel = item.tamanhos;
+    console.log(newSize);
+    console.log(tamanhoModel);
+
+    const newTamanhos = tamanhos.map((tamanho) => {
+      if (tamanhoModel in tamanho) {
+        return {
+          ...tamanho,
+          [tamanhoModel]: tamanho[tamanhoModel] - newSize,
+        };
+      }
+      return tamanho;
+    });
+
+    setTamanhos(newTamanhos);
     const tamanhosRef = doc(db, "tamanhos", docID);
-
     const docSnapshot = await getDoc(tamanhosRef);
-
-    const newSize = docSnapshot[item.tamanhos] - item.quantidade;
-
-    try {
-      await updateDoc(tamanhosRef, {
-        [item.tamanhos]: newSize,
-      });
-      console.log("Documento em 'tamanhos' atualizado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao atualizar documento em 'tamanhos': ", error);
+    const newTamanhosObject = Object.assign({}, ...newTamanhos);
+    if (docSnapshot.exists()) {
+      // O documento existe, pode prosseguir com a atualização
+      await updateDoc(tamanhosRef, newTamanhosObject);
+      console.log("Documento de tamanhos atualizado com sucesso!");
+    } else {
+      console.error("Documento de tamanhos não encontrado!");
     }
+    await updateDoc(tamanhosRef, newTamanhosObject);
   }
   return (
     <>
