@@ -13,12 +13,15 @@ import {
 import { db } from "../../services/firebaseconection";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { CiCalendarDate } from "react-icons/ci";
+import { IoShirtOutline } from "react-icons/io5";
+import { LiaSortAmountUpAltSolid } from "react-icons/lia";
 
 interface SolicitationProps {
   tamanhos: string;
   quantidade: number;
   createdAt: string;
-  userId: string;
+  idUser: Number;
   id: string;
 }
 interface TamanhoProps {
@@ -46,7 +49,7 @@ export function View() {
   const [solicitacoes, setSolicitacoes] = useState<SolicitationProps[]>([]);
   const [tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
   const [search, setSearch] = useState(true);
-  const [searchId, setSearchId] = useState("");
+  const [input, setInput] = useState("");
 
   async function getPedidos() {
     const pedidosRef = collection(db, "camisas");
@@ -54,11 +57,13 @@ export function View() {
 
     const pedidoRef = data.docs.map((doc) => ({
       id: doc.id,
+      idUser: doc.data().userId,
       ...doc.data(),
     })) as SolicitationProps[];
 
     console.log("Array de Solicitações:", pedidoRef);
     setSolicitacoes(pedidoRef);
+    console.log(solicitacoes);
   }
 
   useEffect(() => {
@@ -97,8 +102,6 @@ export function View() {
 
     const newSize = item.quantidade;
     const tamanhoModel = item.tamanhos;
-    console.log(newSize);
-    console.log(tamanhoModel);
 
     const newTamanhos = tamanhos.map((tamanho) => {
       if (tamanhoModel in tamanho) {
@@ -125,14 +128,14 @@ export function View() {
   }
 
   async function HandleSearch() {
-    if (searchId === "") {
+    if (input === "") {
       getPedidos();
       return;
     }
     const q = query(
       collection(db, "camisas"),
-      where("userId", ">=", searchId),
-      where("userId", "<=", searchId + "\uf8ff")
+      where("idUser", ">=", input),
+      where("idUser", "<=", input)
     );
 
     const querySnapshot = await getDocs(q);
@@ -144,11 +147,12 @@ export function View() {
         tamanhos: doc.data().tamanhos,
         quantidade: doc.data().quantidade,
         createdAt: doc.data().createdAt,
-        userId: doc.data().userId,
+        idUser: doc.data().idUser,
         id: doc.id,
       });
     });
     setSolicitacoes(newList);
+    console.log(solicitacoes);
   }
 
   return (
@@ -168,9 +172,10 @@ export function View() {
         {search === true ? (
           <div className="flex gap-5">
             <input
-              className="h-10 px-2 py-1 text-gray-700 w-60 bg-orange-400 "
+              className="h-10 px-2 py-1 text-gray-900 w-60  "
               placeholder="Procure pelo ID do funcionário:"
-              onChange={(e) => setSearchId(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
             />
             <button onClick={HandleSearch}>
               <FiSearch size={23} />
@@ -182,7 +187,7 @@ export function View() {
           solicitacoes.map((item, index) => (
             <section
               key={index}
-              className={` w-80 rounded-lg flex flex-col  p-3 gap-3 text-lg font-medium ${
+              className={` md:w-5/12 w-80 rounded-lg flex flex-col  p-3 gap-3 text-lg font-medium ${
                 item.tamanhos === "P-Azul-Fem" ||
                 item.tamanhos === "P-Azul-Masc" ||
                 item.tamanhos === "M-Azul-Masc" ||
@@ -197,20 +202,20 @@ export function View() {
               }`}
             >
               <div className="flex flex-col justify-between items-center text-base">
-                <h3 className="text-center bg-orange-400 text-black">
-                  {item.id}
+                <h3 className="text-center  text-black bg-gray-300 rounded-lg px-2 py-1">
+                  {" "}
+                  {String(item.idUser)}
                 </h3>
-                <div className="flex">
-                  <section className="flex flex-col justify-center items-center">
-                    <p> Modelo: </p>
-                    <p> {item.tamanhos} </p>
+                <div className="flex w-full justify-between mt-3">
+                  <section className="flex gap-2 justify-center items-center">
+                    <IoShirtOutline size={25} /> <p> {item.tamanhos} </p>
                   </section>
-                  <section className="flex flex-col justify-center items-center">
-                    <p> Quantidade: </p>
+                  <section className="flex gap-2 justify-center items-center">
+                    <LiaSortAmountUpAltSolid size={25} />
                     <p> {item.quantidade}</p>
                   </section>
-                  <section className="flex flex-col justify-center items-center">
-                    <p> Data: </p>
+                  <section className="flex gap-2 justify-center items-center">
+                    <CiCalendarDate size={25} />
                     <p> {item.createdAt}</p>
                   </section>
                   <button onClick={() => HandleDelete(item)}>

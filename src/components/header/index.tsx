@@ -22,13 +22,6 @@ export function Header() {
             Solicitações
           </Link>
           <Link
-            to="/Search"
-            className=" hover:border-b-2 hover:border-cyan-950"
-          >
-            {" "}
-            ID
-          </Link>
-          <Link
             to="/Estoque"
             className=" hover:border-b-2 hover:border-cyan-950"
           >
