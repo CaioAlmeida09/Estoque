@@ -7,9 +7,12 @@ import {
   deleteDoc,
   updateDoc,
   getDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "../../services/firebaseconection";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 
 interface SolicitationProps {
   tamanhos: string;
@@ -42,20 +45,23 @@ interface TamanhoProps {
 export function View() {
   const [solicitacoes, setSolicitacoes] = useState<SolicitationProps[]>([]);
   const [tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
+  const [search, setSearch] = useState(true);
+  const [searchId, setSearchId] = useState("");
+
+  async function getPedidos() {
+    const pedidosRef = collection(db, "camisas");
+    const data = await getDocs(pedidosRef);
+
+    const pedidoRef = data.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as SolicitationProps[];
+
+    console.log("Array de Solicitações:", pedidoRef);
+    setSolicitacoes(pedidoRef);
+  }
 
   useEffect(() => {
-    async function getPedidos() {
-      const pedidosRef = collection(db, "camisas");
-      const data = await getDocs(pedidosRef);
-
-      const pedidoRef = data.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as SolicitationProps[];
-
-      setSolicitacoes(pedidoRef);
-    }
-
     getPedidos();
   }, []);
   useEffect(() => {
@@ -67,7 +73,6 @@ export function View() {
       })) as TamanhoProps[];
 
       setTamanhos(tamanhoRef);
-      console.log(tamanhoRef);
     }
 
     getTamanhos();
@@ -118,13 +123,61 @@ export function View() {
     }
     await updateDoc(tamanhosRef, newTamanhosObject);
   }
+
+  async function HandleSearch() {
+    if (searchId === "") {
+      getPedidos();
+      return;
+    }
+    const q = query(
+      collection(db, "camisas"),
+      where("userId", ">=", searchId),
+      where("userId", "<=", searchId + "\uf8ff")
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    const newList = [] as SolicitationProps[];
+
+    querySnapshot.forEach((doc) => {
+      newList.push({
+        tamanhos: doc.data().tamanhos,
+        quantidade: doc.data().quantidade,
+        createdAt: doc.data().createdAt,
+        userId: doc.data().userId,
+        id: doc.id,
+      });
+    });
+    setSolicitacoes(newList);
+  }
+
   return (
     <>
       <Header />
       <div className="flex flex-col  items-center gap-8">
-        <h1 className="mt-8 text-2xl text-black font-bold">
-          Últimas Solicitações
-        </h1>
+        <section className="flex flex-row justify-between items-center h-10 gap-5">
+          <h1 className="text-2xl text-black font-bold">
+            Últimas Solicitações
+          </h1>
+          {search === false ? (
+            <button onClick={HandleSearch}>
+              <FiSearch size={23} />
+            </button>
+          ) : null}
+        </section>
+        {search === true ? (
+          <div className="flex gap-5">
+            <input
+              className="h-10 px-2 py-1 text-gray-700 w-60 bg-orange-400 "
+              placeholder="Procure pelo ID do funcionário:"
+              onChange={(e) => setSearchId(e.target.value)}
+            />
+            <button onClick={HandleSearch}>
+              <FiSearch size={23} />
+            </button>
+          </div>
+        ) : null}
+
         {solicitacoes &&
           solicitacoes.map((item, index) => (
             <section
@@ -143,23 +196,27 @@ export function View() {
                   : "bg-gray-600"
               }`}
             >
-              <h3 className="text-center"> {item.userId} </h3>
-              <div className="flex justify-between items-center text-base">
-                <section className="flex flex-col justify-center items-center">
-                  <p> Modelo </p>
-                  <p> {item.tamanhos} </p>
-                </section>
-                <section className="flex flex-col justify-center items-center">
-                  <p> Quantidade </p>
-                  <p> {item.quantidade}</p>
-                </section>
-                <section className="flex flex-col justify-center items-center">
-                  <p> Data </p>
-                  <p> {item.createdAt}</p>
-                </section>
-                <button onClick={() => HandleDelete(item)}>
-                  <FaRegTrashAlt size={25} />
-                </button>
+              <div className="flex flex-col justify-between items-center text-base">
+                <h3 className="text-center bg-orange-400 text-black">
+                  {item.id}
+                </h3>
+                <div className="flex">
+                  <section className="flex flex-col justify-center items-center">
+                    <p> Modelo: </p>
+                    <p> {item.tamanhos} </p>
+                  </section>
+                  <section className="flex flex-col justify-center items-center">
+                    <p> Quantidade: </p>
+                    <p> {item.quantidade}</p>
+                  </section>
+                  <section className="flex flex-col justify-center items-center">
+                    <p> Data: </p>
+                    <p> {item.createdAt}</p>
+                  </section>
+                  <button onClick={() => HandleDelete(item)}>
+                    <FaRegTrashAlt size={25} />
+                  </button>
+                </div>
               </div>
             </section>
           ))}
