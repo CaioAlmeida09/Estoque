@@ -206,20 +206,27 @@ export function View() {
                   {" "}
                   {String(item.idUser)}
                 </h3>
-                <div className="flex w-full justify-between mt-3">
-                  <section className="flex gap-2 justify-center items-center">
-                    <IoShirtOutline size={25} /> <p> {item.tamanhos} </p>
+                <div className="grid md:grid-cols-4 grid-cols-2 justify-center ">
+                  <section className="flex justify-center items-center gap-2  mt-3">
+                    <IoShirtOutline size={25} />
+                    <p>{item.tamanhos}</p>
                   </section>
-                  <section className="flex gap-2 justify-center items-center">
+                  <section className="flex justify-center items-center gap-2  mt-3">
                     <LiaSortAmountUpAltSolid size={25} />
-                    <p> {item.quantidade}</p>
+                    <p>{item.quantidade}</p>
                   </section>
-                  <section className="flex gap-2 justify-center items-center">
+                  <section className="flex justify-center items-center gap-2  mt-3">
                     <CiCalendarDate size={25} />
-                    <p> {item.createdAt}</p>
+                    <p>{item.createdAt}</p>
                   </section>
-                  <button onClick={() => HandleDelete(item)}>
-                    <FaRegTrashAlt size={25} />
+                  <button
+                    onClick={() => HandleDelete(item)}
+                    className="flex items-center justify-center mt-3"
+                  >
+                    <FaRegTrashAlt
+                      size={27}
+                      className=" bg-gray-400 hover:bg-red-600 p-1 rounded-md"
+                    />
                   </button>
                 </div>
               </div>

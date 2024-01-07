@@ -29,7 +29,7 @@ export function Header() {
             Estoque
           </Link>
         </section>
-        <img src={Logo} className="md:w-22 md:h-12 w-15 h-8 " />
+        <img src={Logo} className="md:w-22 md:h-12 w-15 h-8" />
       </header>
     </div>
   );
