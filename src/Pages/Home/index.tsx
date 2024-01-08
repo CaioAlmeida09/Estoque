@@ -67,7 +67,7 @@ export function Home() {
     const camisaData = {
       tamanhos: tamanhoSelecionado.value,
       quantidade: Number(quantidadeSelecionada.value),
-      idUser: Number(idDigitado.value),
+      idUser: idDigitado.value,
       createdAt: dataSolicitacao,
     };
 

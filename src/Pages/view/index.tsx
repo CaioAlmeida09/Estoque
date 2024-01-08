@@ -21,9 +21,10 @@ interface SolicitationProps {
   tamanhos: string;
   quantidade: number;
   createdAt: string;
-  idUser: Number;
+  idUser: string;
   id: string;
 }
+
 interface TamanhoProps {
   "P-Cinza-Masc": number;
   "P-Cinza-Fem": number;
@@ -128,31 +129,40 @@ export function View() {
   }
 
   async function HandleSearch() {
-    if (input === "") {
-      getPedidos();
-      return;
+    try {
+      if (input === "") {
+        getPedidos();
+        return;
+      }
+      console.log(input);
+
+      const q = query(collection(db, "camisas"), where("idUser", "==", input));
+
+      const querySnapshot = await getDocs(q);
+
+      const newList = [] as SolicitationProps[];
+
+      console.log("Documentos recuperados:", querySnapshot.docs);
+
+      try {
+        querySnapshot.forEach((doc) => {
+          newList.push({
+            tamanhos: doc.data().tamanhos,
+            quantidade: doc.data().quantidade,
+            createdAt: doc.data().createdAt,
+            idUser: doc.data().idUser,
+            id: doc.id,
+          });
+        });
+      } catch (error) {
+        console.error("Erro ao processar documentos:", error);
+      }
+
+      setSolicitacoes(newList);
+      console.log("Lista de novas solicitações:", newList);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
     }
-    const q = query(
-      collection(db, "camisas"),
-      where("idUser", ">=", input),
-      where("idUser", "<=", input)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    const newList = [] as SolicitationProps[];
-
-    querySnapshot.forEach((doc) => {
-      newList.push({
-        tamanhos: doc.data().tamanhos,
-        quantidade: doc.data().quantidade,
-        createdAt: doc.data().createdAt,
-        idUser: doc.data().idUser,
-        id: doc.id,
-      });
-    });
-    setSolicitacoes(newList);
-    console.log(solicitacoes);
   }
 
   return (
@@ -176,6 +186,7 @@ export function View() {
               placeholder="Procure pelo ID do funcionário:"
               onChange={(e) => setInput(e.target.value)}
               value={input}
+              type="text"
             />
             <button onClick={HandleSearch}>
               <FiSearch size={23} />
