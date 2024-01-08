@@ -49,7 +49,7 @@ interface TamanhoProps {
 export function View() {
   const [solicitacoes, setSolicitacoes] = useState<SolicitationProps[]>([]);
   const [tamanhos, setTamanhos] = useState<TamanhoProps[]>([]);
-  const [search, setSearch] = useState(true);
+  const [search, setSearch] = useState(false);
   const [input, setInput] = useState("");
 
   async function getPedidos() {
@@ -127,13 +127,21 @@ export function View() {
     }
     await updateDoc(tamanhosRef, newTamanhosObject);
   }
-
+  function activeSearch() {
+    if (search === false) {
+      setSearch(true);
+    }
+    if (search === true) {
+      setSearch(false);
+    }
+  }
   async function HandleSearch() {
     try {
       if (input === "") {
         getPedidos();
         return;
       }
+
       console.log(input);
 
       const q = query(collection(db, "camisas"), where("idUser", "==", input));
@@ -174,7 +182,7 @@ export function View() {
             Últimas Solicitações
           </h1>
           {search === false ? (
-            <button onClick={HandleSearch}>
+            <button onClick={activeSearch}>
               <FiSearch size={23} />
             </button>
           ) : null}
@@ -243,6 +251,17 @@ export function View() {
               </div>
             </section>
           ))}
+        {search === true ? (
+          <button
+            onClick={getPedidos}
+            className="bg-blue-400 px-2 py-1 text-lg rounded-lg"
+          >
+            {" "}
+            Ver todas as solicitações
+          </button>
+        ) : (
+          <div></div>
+        )}
       </div>
     </>
   );
