@@ -122,7 +122,7 @@ export function Estoque() {
                 </div>
                 <div className="flex gap-2">
                   {" "}
-                  <p> XGG - Azul - Masculina:</p>
+                  <p> XGG - Cinza - Masculina:</p>
                   <p> {item["XGG-Cinza-Masc"]}</p>
                 </div>
               </div>
