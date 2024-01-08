@@ -16,6 +16,7 @@ import { FiSearch } from "react-icons/fi";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoShirtOutline } from "react-icons/io5";
 import { LiaSortAmountUpAltSolid } from "react-icons/lia";
+import toast from "react-hot-toast";
 
 interface SolicitationProps {
   tamanhos: string;
@@ -98,6 +99,7 @@ export function View() {
 
     const newList = solicitacoes.filter((obj) => obj.id !== item.id);
     setSolicitacoes(newList);
+    toast.error("Item excluído com sucesso!");
 
     const docID = "PZiKQTer4Eib9atJKvFv";
 
@@ -238,13 +240,11 @@ export function View() {
                     <CiCalendarDate size={25} />
                     <p>{item.createdAt}</p>
                   </section>
-                  <button
-                    onClick={() => HandleDelete(item)}
-                    className="flex items-center justify-center mt-3"
-                  >
+                  <button className="flex items-center justify-center mt-3 ">
                     <FaRegTrashAlt
                       size={27}
-                      className=" bg-gray-400 hover:bg-red-600 p-1 rounded-md"
+                      className=" p-1 rounded-md bg-gray-400 hover:bg-red-600"
+                      onClick={() => HandleDelete(item)}
                     />
                   </button>
                 </div>

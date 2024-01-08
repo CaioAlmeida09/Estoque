@@ -64,6 +64,16 @@ export function Home() {
     const dataAtual = new Date();
     const dataSolicitacao = format(dataAtual, "dd/MM/yyyy");
 
+    if (idDigitado.value === "") {
+      Swal.fire({
+        title: "O campo ID é obrigatório!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+
+      return;
+    }
+
     const camisaData = {
       tamanhos: tamanhoSelecionado.value,
       quantidade: Number(quantidadeSelecionada.value),
