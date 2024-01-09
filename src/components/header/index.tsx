@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/logo.png";
+import Img from "../../assets/download.png";
+
 export function Header() {
   return (
     <div>
@@ -29,7 +30,7 @@ export function Header() {
             Estoque
           </Link>
         </section>
-        <img src={Logo} className="md:w-22 md:h-12 w-15 h-8" />
+        <img src={Img} className="md:w-22 md:h-12 w-15 h-8 rounded-lg" />
       </header>
     </div>
   );

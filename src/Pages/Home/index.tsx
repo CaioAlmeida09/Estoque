@@ -135,7 +135,7 @@ export function Home() {
       <div className="h-screen w-full flex flex-col justify-start items-center p-5">
         <h1 className=" text-lg md:text-3xl text-center mt-5 mb-2 font-medium">
           {" "}
-          Controle do Estoque de Camisas - Filial Recife{" "}
+          Controle do Estoque de Camisas{" "}
         </h1>
         <form
           id="meuFormulario"
